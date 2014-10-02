@@ -26,6 +26,8 @@ var validatePayload = function validatePayload(payload, callback){
 
 var listRecords = function listRecords(req, reply){
   var self = this;
+  req.query.filter = req.query.filter || {};
+  req.query.filter.type='project';
   self.asArray(req.query, function(err, records){
     if(err){
       return reply({

@@ -1,5 +1,5 @@
-Proj
-====
+Prodio
+======
 
 API
 ===
@@ -37,13 +37,13 @@ CLI
 To use the CLI you will need to install it:
 
 ```
-npm install -g proj-cli
+npm install -g prodio-cli
 ```
 
-proj init
+prodio init
 ---------
 
-proj init [name] [version] [host] [-d Description]
+prodio init [name] [version] [host] [-d Description]
 
 ```
 Project Name:
@@ -53,7 +53,7 @@ Project Host:
 Project Username:
 ```
 
-proj set [key] [value]
+prodio set [key] [value]
 
 ```
 Key:
@@ -62,21 +62,21 @@ Value:
 
 Examples:
 ```
-proj set username jdarling
-proj set global username jdarling
+prodio set username jdarling
+prodio set global username jdarling
 ```
 
-proj add
+prodio add
 --------
 
-proj add [type] [value]
+prodio add [type] [value]
 
 ```
 Type (user, task, group, note):
 Value:
 ```
 
-proj add note to [type] [value]
+prodio add note to [type] [value]
 ```
 Type (user, task, group, note):
 Value:
@@ -84,15 +84,15 @@ Value:
 
 Examples:
 ```
-proj add user jdarling
-proj add task Document things better
-proj add note to "Document things better" This is my note
+prodio add user jdarling
+prodio add task Document things better
+prodio add note to "Document things better" This is my note
 ```
 
-proj remove
+prodio remove
 -----------
 
-proj remove [type] [id]
+prodio remove [type] [id]
 
 ```
 Type (user, task, group, note):
@@ -101,15 +101,15 @@ ID:
 
 Examples:
 ```
-proj remove note This is my note
-proj remove task Document things better
-proj remove user jdarling
+prodio remove note This is my note
+prodio remove task Document things better
+prodio remove user jdarling
 ```
 
-proj assign
+prodio assign
 -----------
 
-proj assign [type] [id] [user] [user...]
+prodio assign [type] [id] [user] [user...]
 
 ```
 Type (user, task, group, note):
@@ -117,21 +117,21 @@ ID:
 User(s):
 ```
 
-proj assigned to
+prodio assigned to
 ----------------
 
-proj assigned to <who>
+prodio assigned to <who>
 
 Examples:
 ```
-proj assigned to me
-proj assigned to jdarling
+prodio assigned to me
+prodio assigned to jdarling
 ```
 
-proj unassing
+prodio unassing
 -------------
 
-proj unassign [type] [id] [user] [user...]
+prodio unassign [type] [id] [user] [user...]
 
 ```
 Type (user, task, group, note):
@@ -139,32 +139,32 @@ ID:
 User(s):
 ```
 
-proj update
+prodio update
 -----------
 
-proj update [id] [status]
+prodio update [id] [status]
 
 ```
 ID:
 Status (started, completed, in progress):
 ```
 
-proj link
+prodio link
 ---------
 
-proj link [id] to [id]
+prodio link [id] to [id]
 
-proj unlink
+prodio unlink
 -----------
 
-proj unlink [id] from [id]
+prodio unlink [id] from [id]
 
-proj list
+prodio list
 ---------
 
-proj list [id]
+prodio list [id]
 
-Sample Output: proj list
+Sample Output: prodio list
 ```
 0) My Project
   1) My Group
@@ -180,14 +180,14 @@ Sample Output: proj list
       11) Note: Some Note
 ```
 
-proj find
+prodio find
 ---------
 
-proj find <expression> [under id]
+prodio find <expression> [under id]
 or
-proj find <expression>
+prodio find <expression>
 
-Sample Output: proj find task
+Sample Output: prodio find task
 ```
 2) Task 1
 3) Task 2
@@ -197,24 +197,24 @@ Sample Output: proj find task
 10) Note: Sub task note
 ```
 
-Sample Output: proj find task under 8
+Sample Output: prodio find task under 8
 ```
 9) Sub task
 10) Note: Sub task note
 ```
 
-proj detail
+prodio detail
 -----------
 
-proj detail <id> [full]
+prodio detail <id> [full]
 
-Sample Output: proj detail 8
+Sample Output: prodio detail 8
 ```
 0) My Project
   6) Group 2
     8) Another Task
 ```
-Sample Output: proj detail 8 full
+Sample Output: prodio detail 8 full
 
 ```
 0) My Project

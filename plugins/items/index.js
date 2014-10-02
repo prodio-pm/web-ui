@@ -1,4 +1,4 @@
-var validatePayload = function validatePayload(project_id, payload, callback){
+var validatePayload = function validatePayload(store, project_id, payload, callback){
   if((!payload)||(typeof(payload)!=='object')){
     return callback({
       root: 'error',
@@ -19,7 +19,27 @@ var validatePayload = function validatePayload(project_id, payload, callback){
   }
   payload.project_id = project_id;
   payload.parent_id = payload.parent_id || payload.project_id;
-  callback(null, payload);
+  store.get(project_id, function(err, project){
+    if(err){
+      return callback({
+        root: 'error',
+        error: err
+      });
+    }
+    if(!project[project.root]){
+      return callback({
+        root: 'error',
+        error: 'Could not locate a project with id of '+project_id+'!'
+      });
+    }
+    if(project[project.root].type!=='project'){
+      return callback({
+        root: 'error',
+        error: 'Could not locate a project with id of '+project_id+'!'
+      });
+    }
+    callback(null, {project: project[project.root], payload: payload});
+  });
 };
 
 var listRecords = function listRecords(req, reply){
@@ -35,6 +55,31 @@ var listRecords = function listRecords(req, reply){
       });
     }
     return reply(records);
+  });
+};
+
+var getTree = function listRecords(req, reply){
+  var self = this;
+  var options = req.query||{};
+  options.filter = options.filter || {};
+  options.filter.project_id = req.params.project_id;
+  self.get(req.params.project_id, function(err, record){
+    if(err){
+      return reply({
+        root: 'error',
+        error: err
+      });
+    }
+    self.asArray(options, function(err, records){
+      if(err){
+        return reply({
+          root: 'error',
+          error: err
+        });
+      }
+      records[records.root].unshift(record[record.root]);
+      return reply(records);
+    });
   });
 };
 
@@ -63,11 +108,11 @@ var getRecord = function getRecord(req, reply){
 
 var createRecord = function createRecord(req, reply){
   var self = this;
-  validatePayload(req.params.project_id, req.payload, function(err, payload){
+  validatePayload(self, req.params.project_id, req.payload, function(err, details){
     if(err){
       return reply(err);
     }
-    self.insert(payload, function(err, record){
+    self.insert(details.payload, function(err, record){
       if(err){
         return reply({
           root: 'error',
@@ -84,11 +129,11 @@ var createRecord = function createRecord(req, reply){
 
 var updateRecord = function updateRecord(req, reply){
   var self = this;
-  validatePayload(req.params.project_id, req.payload, function(err, payload){
+  validatePayload(self, req.params.project_id, req.payload, function(err, details){
     if(err){
       return reply(err);
     }
-    self.update(req.params.id, payload, function(err, record){
+    self.update(req.params.id, details.payload, function(err, record){
       if(err){
         return reply({
           root: 'error',
@@ -163,7 +208,7 @@ module.exports = function(options, next){
     {
       method: 'GET',
       path: config.route + 'project/{project_id}/tree',
-      handler: listRecords.bind(store)
+      handler: getTree.bind(store)
     }
   ]);
   next();

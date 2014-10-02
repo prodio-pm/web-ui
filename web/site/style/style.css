@@ -33,3 +33,8 @@ footer {
 a {
   text-decoration: none;
 }
+pre code {
+  background: #EEE;
+  display: block;
+  color: #404040;
+}

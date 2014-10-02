@@ -1,10 +1,10 @@
 {
-  "name": "proj",
+  "name": "prodio",
   "version": "0.0.1",
   "description": "Simplified project management",
   "main": "server.js",
   "scripts": {
-    "test": "mocha test"
+    "test": "./node_modules/mocha/bin/mocha test"
   },
   "keywords": [
     "Project",
