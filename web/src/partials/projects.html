@@ -1,0 +1,13 @@
+<div class="ink-grid">
+  <div class="column-group">
+    <h1>Projects</h1>
+    <div class="all-100"><a class="ink-button blue small" href="#project/new"><i class="fa fa-plus-circle"></i> Create New</a></div>
+    {{#each items}}
+      <div class="all-25 medium-50 small-100 tiny-100">
+        <dt><a href="#project/edit/{{_id}}">{{name}}</a> <span class="ink-badge grey">v{{version}}</span></dt><dd>{{description}}</dd>
+      </div>
+    {{else}}
+      <div class="all-100">No projects currently available, why not <a href="#project/new">create one</a>?</div>
+    {{/each}}
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="ink-grid">
+  <div class="column-group">
+    <div><strong>UI Version:</strong> v0.0.1</div>
+    <div data-controller="SocketListener" data-message="system::status">
+      <div><strong>Server Version:</strong> v\{{version}}</div>
+      <div><strong>Memory:</strong> \{{mem.heapUsed}} of \{{mem.heapTotal}}</div>
+      <progress class="all-100" value="\{{mem.heapUsed}}" max="\{{mem.heapTotal}}"></progress>
+      <div><strong>Uptime:</strong> \{{uptime}}s</div>
+    </div>
+  </div>
+</div>

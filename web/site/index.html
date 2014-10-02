@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Proj</title>
+    <link rel="stylesheet" href="/vendor/alertify/alertify.core.css">
+    <link rel="stylesheet" href="/vendor/alertify/alertify.default.css">
+    <link rel="stylesheet" href="/vendor/ink/css/ink.css">
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/style/style.css">
+  </head>
+  <body>
+    <nav class="ink-navigation">
+       <ul class="menu horizontal blue">
+          <li><a class="logoPlaceholder" href="#home" id="header_logo_text">Proj</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#status">Server Status</a></li>
+       </ul>
+    </nav>
+
+    <div>
+      <div style="clear: both; height: 40px;"></div>
+      <div id="outlet"></div>
+      <div style="clear: both; height: 2em;"></div>
+    </div>
+
+    <footer>
+      Another take on Project Management
+    </footer>
+
+    <script type="text/x-template" id="loading">
+      <div style="text-align: center">
+        <div>Loading...</div>
+        <div class="loading"></div>
+      </div>
+    </script>
+    <script type="text/x-template" id="home"><div class="ink-grid vertical-space">
+  <p>Welcome to Proj, a different take on Project Management.</p>
+</div>
+</script>
+    <script type="text/x-template" id="projects" data-api="/api/v1/projects" nav="projects"><div class="ink-grid">
+  <div class="column-group">
+    <h1>Projects</h1>
+    <div class="all-100"><a class="ink-button blue small" href="#project/new"><i class="fa fa-plus-circle"></i> Create New</a></div>
+    {{#each items}}
+      <div class="all-25 medium-50 small-100 tiny-100">
+        <dt><a href="#project/edit/{{_id}}">{{name}}</a> <span class="ink-badge grey">v{{version}}</span></dt><dd>{{description}}</dd>
+      </div>
+    {{else}}
+      <div class="all-100">No projects currently available, why not <a href="#project/new">create one</a>?</div>
+    {{/each}}
+  </div>
+</div>
+</script>
+    <script type="text/x-template" id="newproject" nav="project/new"><h1>New Project</h1>
+<form class="ink-form" data-controller="FormSubmitter" action="/api/v1/project" data-target="#project/edit/{_id}">
+  <div class="control-group required">
+    <label>Project Name:</label>
+    <div class="control">
+      <input name="name" placeholder="Project name...">
+    </div>
+  </div>
+  <div class="control-group">
+    <label>Description</label>
+    <div class="control">
+      <input name="description" placeholder="Description...">
+    </div>
+    <label>Version:</label>
+    <div class="control">
+      <input name="version" placeholder="0.0.1">
+    </div>
+  </div>
+  <div class="control-group">
+    <button class="ink-button blue">Create</button>
+  </div>
+</form>
+</script>
+    <script type="text/x-template" id="editproject" data-api="/api/v1/project/{id}" nav="project/edit/{id}"><h1>View project</h1>
+<form class="ink-form" data-controller="FormSubmitter" action="/api/v1/project/{{_id}}" data-target="#project/edit/{_id}" data-message="Saved">
+  <div class="control-group required">
+    <label>Project Name:</label>
+    <div class="control">
+      <input name="name" placeholder="Project name..." value="{{name}}">
+    </div>
+  </div>
+  <div class="control-group">
+    <label>Description</label>
+    <div class="control">
+      <input name="description" placeholder="Description..." value="{{description}}">
+    </div>
+    <label>Version:</label>
+    <div class="control">
+      <input name="version" placeholder="0.0.1" value="{{version}}">
+    </div>
+  </div>
+  <div class="control-group">
+    <button class="ink-button blue">Update</button>
+    <button class="ink-button red" data-method="DELETE" data-confirm="Are you sure you want to delete this project?" data-target="#projects">Delete</button>
+  </div>
+</form>
+</script>
+    <script type="text/x-template" id="status" data-api="/api/v1/status" nav="status"><div class="ink-grid">
+  <div class="column-group">
+    <div><strong>UI Version:</strong> v0.0.1</div>
+    <div data-controller="SocketListener" data-message="system::status">
+      <div><strong>Server Version:</strong> v\{{version}}</div>
+      <div><strong>Memory:</strong> \{{mem.heapUsed}} of \{{mem.heapTotal}}</div>
+      <progress class="all-100" value="\{{mem.heapUsed}}" max="\{{mem.heapTotal}}"></progress>
+      <div><strong>Uptime:</strong> \{{uptime}}s</div>
+    </div>
+  </div>
+</div>
+</script>
+
+    <script type="text/javascript" src="/vendor/handlebars/handlebars.js"></script>
+    <script type="text/javascript" src="/vendor/satnav/dist/satnav.js"></script>
+    <script type="text/javascript" src="/vendor/async/async.js"></script>
+    <script type="text/javascript" src="/vendor/moment/moment.min.js"></script>
+    <script type="text/javascript" src="/vendor/markdown/markdown.js"></script>
+    <script type="text/javascript" src="/vendor/alertify/alertify.min.js"></script>
+
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="/js/app.js"></script>
+  </body>
+</html>
