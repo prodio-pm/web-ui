@@ -24,7 +24,7 @@ var TableViewController = function(container, data){
     }
   }
   if(data){
-    self.update(data);
+    self.update(data.items?data.items:data);
   }
   self.dataAttributePrefix = 'table';
 };

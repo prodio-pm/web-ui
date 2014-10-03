@@ -38,3 +38,30 @@ pre code {
   display: block;
   color: #404040;
 }
+svg .node circle {
+  fill: white;
+  stroke: #1b75ce;
+  stroke-width: 2px;
+}
+svg .node.collapsed circle {
+  fill: #1b75ce;
+  stroke: #1b75ce;
+  stroke-width: 2px;
+}
+svg .node.selected circle {
+  fill: green;
+}
+svg .node.complete {
+  fill: green;
+}
+svg .node.blocked {
+  fill: red;
+}
+svg .node.in-progress {
+  fill: blue;
+}
+svg .templink {
+  fill: none;
+  stroke: red;
+  stroke-width: 3px;
+}

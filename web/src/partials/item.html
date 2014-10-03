@@ -1,13 +1,14 @@
 <div class="ink-grid vertical-space">
-  <h1>View project</h1>
-  <a href="#project/{{_id}}">&lt; overview</a>
+  <h1>Edit Item Details</h1>
+  <a href="#project/{{project_id}}">&lt; overview</a>
   <form class="ink-form" data-controller="FormSubmitter"
-      action="/api/v1/project/{{_id}}" data-target="#project/edit/{_id}"
+      action="/api/v1/project/{{project_id}}/item/{{_id}}" data-target="#project/{project_id}"
       data-message="Saved">
+    <input type="hidden" name="parent_id" value="{{parent_id}}" />
     <div class="control-group required">
-      <label>Project Name:</label>
+      <label>Name:</label>
       <div class="control">
-        <input name="name" placeholder="Project name..." value="{{name}}" />
+        <input name="name" placeholder="Item name..." value="{{name}}" />
       </div>
     </div>
     <div class="control-group">
@@ -15,7 +16,15 @@
       <div class="control">
         <input name="description" placeholder="Description..." value="{{description}}" />
       </div>
-      <label>Version:</label>
+      <label>Type:</label>
+      <div class="control">
+        <input name="type" placeholder="Type..." value="{{type}}" />
+      </div>
+      <label>Status:</label>
+      <div class="control">
+        <input name="status" placeholder="Status..." value="{{status}}" />
+      </div>
+      <label>Target Version:</label>
       <div class="control">
         <input name="version" placeholder="0.0.1" value="{{version}}" />
       </div>
@@ -24,7 +33,7 @@
       <button class="ink-button blue">Update</button>
       <button class="ink-button red" data-method="DELETE"
         data-confirm="Are you sure you want to delete this project?"
-        data-target="#projects">Delete</button>
+        data-target="#project/{project_id}">Delete</button>
     </div>
   </form>
 </div>

@@ -15,6 +15,7 @@
        <ul class="menu horizontal blue">
           <li><a class="logoPlaceholder" href="#home" id="header_logo_text">Prodio</a></li>
           <li><a href="#projects">Projects</a></li>
+          <li><a href="#reports">Reports</a></li>
           <li><a href="#status">Server Status</a></li>
        </ul>
     </nav>
@@ -39,7 +40,12 @@
     <script type="text/x-template" id="projects" data-api="/api/v1/projects" embed-src="partials/projects.html" nav="projects"></script>
     <script type="text/x-template" id="newproject" embed-src="partials/newproject.html" nav="project/new"></script>
     <script type="text/x-template" id="editproject" embed-src="partials/editproject.html" data-api="/api/v1/project/{id}" nav="project/edit/{id}"></script>
+    <script type="text/x-template" id="viewproject" embed-src="partials/project.html" data-api="/api/v1/project/{id}/tree" nav="project/{id}"></script>
+    <script type="text/x-template" id="edititem" embed-src="partials/item.html" data-api="/api/v1/project/{project_id}/item/{item_id}" nav="project/{project_id}/item/{item_id}"></script>
+    <script type="text/x-template" id="reports" embed-src="partials/reports.html" nav="reports" data-api="/api/v1/projects"></script>
     <script type="text/x-template" id="status" data-api="/api/v1/status" embed-src="partials/status.html" nav="status"></script>
+
+    <script type="text/x-template" id="reports_overview" embed-src="partials/reports/overview.html" nav="reports/overview/{id}" data-api="/api/v1/project/{id}/items"></script>
 
     <script type="text/javascript" src="/vendor/handlebars/handlebars.js"></script>
     <script type="text/javascript" src="/vendor/satnav/dist/satnav.js"></script>
@@ -47,6 +53,8 @@
     <script type="text/javascript" src="/vendor/moment/moment.min.js"></script>
     <script type="text/javascript" src="/vendor/markdown/markdown.js"></script>
     <script type="text/javascript" src="/vendor/alertify/alertify.min.js"></script>
+    <script type="text/javascript" src="/vendor/d3/d3.min.js"></script>
+    <script type="text/javascript" src="/vendor/mousetrap/mousetrap.js"></script>
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 

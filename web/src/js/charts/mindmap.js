@@ -35,10 +35,12 @@ var MindMap = module.exports = function(){
       duration = 500,
       identity = '_id',
       handleClick = function(){},
+      handleDoubleClick = function(){},
       text = function(d){ return d.name; },
       idx = 1,
       style = false,
       onUpdate = false,
+      nodeClass = null,
       enterNode = function(node){
         node.append('svg:circle')
             .attr('r', 1e-6);
@@ -89,148 +91,156 @@ var MindMap = module.exports = function(){
         vis = graphRoot;
       }
       vis = vis
-      .attr('transform', 'translate(' + (w/2+margin.left) + ',' + margin.top + ')')
-      ;
+        .attr('transform', 'translate(' + (w/2+margin.left) + ',' + margin.top + ')')
+        ;
 
       root.x0 = h / 2;
       root.y0 = 0;
 
-      var tree = d3.layout.tree()
+      var tree = chart.tree = d3.layout.tree()
           .size([h, w]);
 
-      chart.update = function() { container.transition().duration(duration).call(chart); };
-
-      // Ensure we have Left and Right node lists
-      if(!(root.left || root.right)){
-        var i=0, l = (root.children||[]).length;
-        root.left = [];
-        root.right = [];
-        for(; i<l; i++){
-          if(i%2){
-            root.left.push(root.children[i]);
-            root.children[i].position = 'left';
-          }else{
-            root.right.push(root.children[i]);
-            root.children[i].position = 'right';
+        // Ensure we have Left and Right node lists
+        if(!(root.left || root.right)){
+          var i=0, l = (root.children||[]).length;
+          root.left = [];
+          root.right = [];
+          for(; i<l; i++){
+            if(i%2){
+              root.left.push(root.children[i]);
+              root.children[i].position = 'left';
+            }else{
+              root.right.push(root.children[i]);
+              root.children[i].position = 'right';
+            }
           }
         }
-      }
 
-      // Compute the new tree layout.
-      var nodesLeft = tree
-        .size([h, (w/2)-20])
-        .children(function(d){
-          return (d.depth===0)?d.left:d.children;
-        })
-        .nodes(root)
-        .reverse();
-      var nodesRight = tree
-        .size([h, w/2])
-        .children(function(d){
-          return (d.depth===0)?d.right:d.children;
-        })
-        .nodes(root)
-        .reverse();
-      root.children = root.left.concat(root.right);
-      var nodes = window.nodes = (function(left, right){
-        var root = right[right.length-1];
-        left.pop();
-        left.forEach(function(node){
-          node.y = -node.y;
-          node.parent = root;
-          node.position = 'left';
+      chart.update = function(source) {
+        // Compute the new tree layout.
+        var nodesLeft = tree
+          .size([h, (w/2)-20])
+          .children(function(d){
+            return (d.depth===0)?d.left:d.children;
+          })
+          .nodes(root)
+          .reverse();
+        var nodesRight = tree
+          .size([h, w/2])
+          .children(function(d){
+            return (d.depth===0)?d.right:d.children;
+          })
+          .nodes(root)
+          .reverse();
+        root.children = root.left.concat(root.right);
+        var nodes = (function(left, right){
+          var root = right[right.length-1];
+          left.pop();
+          left.forEach(function(node){
+            node.y = -node.y;
+            //node.parent = root;
+            node.position = 'left';
+          });
+          right.forEach(function(node){
+            node.position = 'right';
+          });
+          root.position = 'root';
+          return left.concat(right);
+        })(nodesLeft, nodesRight);
+
+        // Update the nodes…
+        var node = vis.selectAll('g.node')
+            .data(nodes, function(d) { return d[identity] || (d[identity] = ++idx); });
+
+        // Enter any new nodes at the parent's previous position.
+        var nodeEnter = node.enter().append('svg:g')
+            .attr('class', nodeClass||function(d){
+              var base = 'node';
+              return d._children?base+' collapsed':base;
+            })
+            .attr('position', function(d){
+              return d.position;
+            })
+            .attr('transform', function(d) {
+              return 'translate(' + (source||root).y0 + ',' + (source||root).x0 + ')';
+            })
+            .on('click', handleClick)
+            .on('dblclick', handleDoubleClick);
+
+
+        enterNode(nodeEnter);
+
+        // Transition nodes to their new position.
+        var nodeUpdate = node.transition()
+            .attr('class', nodeClass||function(d){
+              return d._children?'node collapsed':'node';
+            })
+            .duration(duration)
+            .attr('transform', function(d) { return 'translate(' + d.y + ',' + d.x + ')'; });
+
+
+        updateNode(nodeUpdate);
+
+        // Transition exiting nodes to the parent's new position.
+        var nodeExit = node.exit().transition()
+            .duration(duration)
+            .attr('transform', function() { return 'translate(' + (source||root).y + ',' + (source||root).x + ')'; })
+            .remove();
+
+        exitNode(nodeExit);
+
+        // Update the links…
+        var link = vis.selectAll('path.link')
+            .data(tree.links(nodes), function(d) { return d.target[identity]; });
+
+        // Enter any new links at the parent's previous position.
+        link.enter().insert('svg:path', 'g')
+            .attr('class', 'link')
+            .attr('d', function() {
+              var o = {x: (source||root).x0, y: (source||root).y0};
+              return connector({source: o, target: o});
+            })
+            .style({
+              fill: 'none',
+              stroke: '#ccc',
+              'stroke-width': '1.5px'
+            })
+          .transition()
+            .duration(duration)
+            .attr('d', connector);
+
+        // Transition links to their new position.
+        link.transition()
+            .duration(duration)
+            .attr('d', connector);
+
+        // Transition exiting nodes to the parent's new position.
+        link.exit().transition()
+            .duration(duration)
+            .attr('d', function() {
+              var o = {x: (source||root).x, y: (source||root).y};
+              return connector({source: o, target: o});
+            })
+            .remove();
+
+        // Stash the old positions for transition.
+        nodes.forEach(function(d) {
+          d.x0 = d.x;
+          d.y0 = d.y;
         });
-        right.forEach(function(node){
-          node.position = 'right';
-        });
-        root.position = 'root';
-        return left.concat(right);
-      })(nodesLeft, nodesRight);
 
-      // Update the nodes…
-      var node = vis.selectAll('g.node')
-          .data(nodes, function(d) { return d[identity] || (d[identity] = ++idx); });
-
-      // Enter any new nodes at the parent's previous position.
-      var nodeEnter = node.enter().append('svg:g')
-          .attr('class', 'node')
-          .attr('position', function(d){
-            return d.position;
-          })
-          .attr('transform', function(d) {
-            return 'translate(' + root.y0 + ',' + root.x0 + ')';
-          })
-          .on('click', handleClick);
-
-
-      enterNode(nodeEnter);
-
-      // Transition nodes to their new position.
-      var nodeUpdate = node.transition()
-          .duration(duration)
-          .attr('transform', function(d) { return 'translate(' + d.y + ',' + d.x + ')'; });
-
-
-      updateNode(nodeUpdate);
-
-      // Transition exiting nodes to the parent's new position.
-      var nodeExit = node.exit().transition()
-          .duration(duration)
-          .attr('transform', function() { return 'translate(' + root.y + ',' + root.x + ')'; })
-          .remove();
-
-      exitNode(nodeExit);
-
-      // Update the links…
-      var link = vis.selectAll('path.link')
-          .data(tree.links(nodes), function(d) { return d.target[identity]; });
-
-      // Enter any new links at the parent's previous position.
-      link.enter().insert('svg:path', 'g')
-          .attr('class', 'link')
-          .attr('d', function() {
-            var o = {x: root.x0, y: root.y0};
-            return connector({source: o, target: o});
-          })
-          .style({
-            fill: 'none',
-            stroke: '#ccc',
-            'stroke-width': '1.5px'
-          })
-        .transition()
-          .duration(duration)
-          .attr('d', connector);
-
-      // Transition links to their new position.
-      link.transition()
-          .duration(duration)
-          .attr('d', connector);
-
-      // Transition exiting nodes to the parent's new position.
-      link.exit().transition()
-          .duration(duration)
-          .attr('d', function() {
-            var o = {x: root.x, y: root.y};
-            return connector({source: o, target: o});
-          })
-          .remove();
-
-      // Stash the old positions for transition.
-      nodes.forEach(function(d) {
-        d.x0 = d.x;
-        d.y0 = d.y;
-      });
-
-      if(style){
-        var key;
-        for(key in style){
-          vis.selectAll(key).attr('style', style[key]);
+        if(style){
+          var key;
+          for(key in style){
+            vis.selectAll(key).attr('style', style[key]);
+          }
         }
-      }
 
-      if(onUpdate){
-        onUpdate(vis);
-      }
+        if(onUpdate){
+          onUpdate(vis);
+        }
+      };
+      chart.update();
     });
   };
 
@@ -264,6 +274,12 @@ var MindMap = module.exports = function(){
     return chart;
   };
 
+  chart.doubleClick = function(_) {
+    if (!arguments.length) return handleDoubleClick;
+    handleDoubleClick = _;
+    return chart;
+  };
+
   chart.identity = function(_) {
     if (!arguments.length) return identity;
     identity = _;
@@ -273,6 +289,12 @@ var MindMap = module.exports = function(){
   chart.text = function(_) {
     if (!arguments.length) return text;
     text = _;
+    return chart;
+  };
+
+  chart.nodeClass = function(_){
+    if (!arguments.length) return nodeClass;
+    nodeClass = _;
     return chart;
   };
 

@@ -45,3 +45,33 @@ pre code {
   display: block;
   color: #404040;
 }
+
+svg{
+  .node circle{
+    fill: white;
+    stroke: #1b75ce;
+    stroke-width: 2px;
+  }
+  .node.collapsed circle{
+    fill: #1b75ce;
+    stroke: #1b75ce;
+    stroke-width: 2px;
+  }
+  .node.selected circle{
+    fill: green;
+  }
+  .node.complete{
+    fill: green;
+  }
+  .node.blocked{
+    fill: red;
+  }
+  .node.in-progress{
+    fill: blue;
+  }
+  .templink {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+  }
+}

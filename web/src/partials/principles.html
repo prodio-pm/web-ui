@@ -1,0 +1,74 @@
+<div class="ink-grid vertical-space">
+  <h2>General Principles</h2>
+  <p>All systems have rules and while Prodio strives to have a few as possible
+    it seems like a good idea to at least set some general principles. These
+    are loosely based on that of a 12 factor app.</p>
+  <h3>Function over Form</h3>
+  <p>Architects like Form over Function where the shape of a building or object
+    is based upon its function or purpose.</p>
+  <p>Prodio takes Function over Form where the function of the service or
+    method is more important than the Form it is chosen to be implemented in.</p>
+  <p>This means that it does not matter what language, databse, or style you
+    decide to implement a particular function in, it only matters that it
+    does exactly as it is designed to do.</p>
+  <h3>Micro-service driven</h3>
+  <p>To the extent possible everything should be developed with the though of
+    micro services in mind.  All functions should do one thing and one thing
+    only.  It should be little to no effort to modify or completely replace a
+    particular function without impacting any other function within Prodio.</p>
+  <h3>Consistency</h3>
+  <p>While it is true that "Function over Form" is a rule, it is also true that
+    consistency matters.  For any given language there are always a set of do's
+    and dont's.  Ensure that you follow these.</p>
+  <p>An example of this would be indention, if a function is designed using 2
+    space characters, then you should not utilize tabs.  If it was designed
+    with tabs, then you should not utilize spaces.</p>
+  <p>Consistency matters only at the functional level.  Functions may differ.</p>
+  <h3>Scale Horizontally</h3>
+  <p>This is similar to the Concurrency model of the 12 Factor app.  Where by
+    the program should "Scale out via the process model."</p>
+  <p>To this end all functions should be able to operate within their own
+    process model. This allows more work to be taken in by adding forking
+    processes for the overloaded function without taking into consideration
+    any special needs.</p>
+  <h3>Backend Independent</h3>
+  <p>At no time shall any function not directly designed for data persistence
+    require a specific storge facility.  All requests for data shall be provided
+    through a function designed only for storage, retrieval, or modification
+    of data at rest.  Data in motion may never be mutated.</p>
+  <p>The only exception to this is that ALL data within the system shall be
+    delivered or conveyed using JSON. All query operations shall be represented
+    via JSON and shall conform to the standards as set in the data query
+    section.</p>
+  <h3>Be Idempotent</h3>
+  <p>01+01 must always equal 10.</p>
+  <p>This is to say that given a known input to a function it should always
+    produce the same known output.</p>
+  <p>As an example, changing the description of a project or item should always
+    return an object with the updated address.</p>
+  <p>The elevator button is another good example of idempotent functionality:
+    "The initial activation of the button moves the system into a requesting
+    state, until the request is satisfied. Subsequent activations of the button
+    between the initial activation and the request being satisfied have no
+    effect."</p>
+  <h3>Be Immutable</h3>
+  <p>Passed data shall never be modified or mutated. New data may be created,
+    but it can never be mutated. This is the nature of a Service Bus and must
+    be adhered to in order to ensure horizontal scaling.</p>
+  <h3>Share Nothing</h3>
+  <p>Any data that needs to be persisted must be stored in a stateful service
+    that can be utilized by other services.  At no point will caching be
+    utilized outside of a single execution of any given function.</p>
+  <h3>The Rule of Jim</h3>
+  <p>I once worked with a man named Jim. Jim was known for being a bit odd. If
+    you wanted to break something, you gave it to Jim. If you wanted to know
+    the limits of something, you gave it to Jim.</p>
+  <p>An example was the concepts of tasks and sub-tasks. These were introduced
+    as "Create a task or sub-task for every action." Within 24 hours Jim had
+    crashed the system by creating a tree 20+ levels deep containing over 400
+    tasks and sub-task combinations. Rather than resolve the process or "fix"
+    the application Jim was told to stop.</p>
+  <p>In so much as is possible don't make the edge case stop. If it is correct
+    for someone to create such a tree then let it be created, let it be
+    navigated, and if it doesn't work then fix it.</p>
+</div>

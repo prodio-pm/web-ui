@@ -77,16 +77,67 @@ var getTree = function listRecords(req, reply){
           error: err
         });
       }
-      records[records.root].unshift(record[record.root]);
-      return reply(records);
+      var tree = {
+        root: record[record.root],
+        nodes: records[records.root],
+        edges: [],
+        criteria: {
+          length: records.length,
+          offset: records.offset,
+          count: records.count,
+          limit: records.limit
+        }
+      };
+      tree.nodes.forEach(function(node){
+        tree.edges.push({from: node.parent_id, to: node._id});
+      });
+      return reply({
+        root: 'tree',
+        tree: tree
+      });
     });
   });
 };
 
 var getBranch = function(req, reply){
-  reply({
-    root: 'error',
-    error: 'Not implemented!'
+  var self = this;
+  var options = req.query||{};
+  options.filter = options.filter || {};
+  options.filter.project_id = req.params.project_id;
+  options.filter.parent_id = req.params.id;
+  self.get(req.params.id, function(err, record){
+    if(err){
+      return reply({
+        root: 'error',
+        error: err
+      });
+    }
+    self.asArray(options, function(err, records){
+      if(err){
+        return reply({
+          root: 'error',
+          error: err
+        });
+      }
+      var tree = {
+        root: record[record.root],
+        nodes: records[records.root],
+        edges: [],
+        criteria: {
+          length: records.length,
+          offset: records.offset,
+          count: records.count,
+          limit: records.limit
+        }
+      };
+      tree.nodes.forEach(function(node){
+        tree.edges.push({from: node.parent_id, to: node._id});
+      });
+      return reply({
+        root: 'tree',
+        tree: tree
+      });
+    });
   });
 };
 
@@ -99,7 +150,7 @@ var getRecord = function getRecord(req, reply){
         error: err
       });
     }
-    return reply({
+    return reply(record.root?record:{
       root: 'record',
       record: record
     });
@@ -119,7 +170,7 @@ var createRecord = function createRecord(req, reply){
           error: err
         });
       }
-      return reply({
+      return reply(record.root?record:{
         root: 'record',
         record: record
       });
@@ -140,7 +191,7 @@ var updateRecord = function updateRecord(req, reply){
           error: err
         });
       }
-      return reply({
+      return reply(record.root?record:{
         root: 'record',
         record: record
       });
@@ -209,6 +260,11 @@ module.exports = function(options, next){
       method: 'GET',
       path: config.route + 'project/{project_id}/tree',
       handler: getTree.bind(store)
+    },
+    {
+      method: 'GET',
+      path: config.route + 'project/{project_id}/branch/{id}',
+      handler: getBranch.bind(store)
     }
   ]);
   next();

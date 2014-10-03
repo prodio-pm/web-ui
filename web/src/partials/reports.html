@@ -1,0 +1,14 @@
+<h1>Reports</h1>
+<form data-controller="ReportSelector">
+  Select a project:
+    <select name="id">
+    {{#each items}}
+      <option value="{{_id}}">{{name}}</option>
+    {{/each}}
+    </select>
+  Select a report:
+    <select name="report">
+      <option value="#reports/overview/{id}">Status Overview</option>
+    </select>
+  <button class="ink-button blue">Display</button>
+</form>

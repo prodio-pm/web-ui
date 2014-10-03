@@ -15,6 +15,7 @@
        <ul class="menu horizontal blue">
           <li><a class="logoPlaceholder" href="#home" id="header_logo_text">Prodio</a></li>
           <li><a href="#projects">Projects</a></li>
+          <li><a href="#reports">Reports</a></li>
           <li><a href="#status">Server Status</a></li>
        </ul>
     </nav>
@@ -49,183 +50,7 @@
     feature, story, or whatever you want to call it is simple.  Open the project
     and add in a new node.  Then go to reports to view how the new node affects
     the project as a whole.</p>
-  <h2>General Principles</h2>
-  <p>All systems have rules and while Prodio strives to have a few as possible
-    it seems like a good idea to at least set some general principles. These
-    are loosely based on that of a 12 factor app.</p>
-  <h3>Function over Form</h3>
-  <p>Architects like Form over Function where the shape of a building or object
-    is based upon its function or purpose.</p>
-  <p>Prodio takes Function over Form where the function of the service or
-    method is more important than the Form it is chosen to be implemented in.</p>
-  <p>This means that it does not matter what language, databse, or style you
-    decide to implement a particular function in, it only matters that it
-    does exactly as it is designed to do.</p>
-  <h3>Micro-service driven</h3>
-  <p>To the extent possible everything should be developed with the though of
-    micro services in mind.  All functions should do one thing and one thing
-    only.  It should be little to no effort to modify or completely replace a
-    particular function without impacting any other function within Prodio.</p>
-  <h3>Consistency</h3>
-  <p>While it is true that &quot;Function over Form&quot; is a rule, it is also true that
-    consistency matters.  For any given language there are always a set of do&apos;s
-    and dont&apos;s.  Ensure that you follow these.</p>
-  <p>An example of this would be indention, if a function is designed using 2
-    space characters, then you should not utilize tabs.  If it was designed
-    with tabs, then you should not utilize spaces.</p>
-  <p>Consistency matters only at the functional level.  Functions may differ.</p>
-  <h3>Scale Horizontally</h3>
-  <p>This is similar to the Concurrency model of the 12 Factor app.  Where by
-    the program should &quot;Scale out via the process model.&quot;</p>
-  <p>To this end all functions should be able to operate within their own
-    process model. This allows more work to be taken in by adding forking
-    processes for the overloaded function without taking into consideration
-    any special needs.</p>
-  <h3>Backend Independent</h3>
-  <p>At no time shall any function not directly designed for data persistence
-    require a specific storge facility.  All requests for data shall be provided
-    through a function designed only for storage, retrieval, or modification
-    of data at rest.  Data in motion may never be mutated.</p>
-  <p>The only exception to this is that ALL data within the system shall be
-    delivered or conveyed using JSON. All query operations shall be represented
-    via JSON and shall conform to the standards as set in the data query
-    section.</p>
-  <h3>Be Idempotent</h3>
-  <p>01+01 must always equal 10.</p>
-  <p>This is to say that given a known input to a function it should always
-    produce the same known output.</p>
-  <p>As an example, changing the description of a project or item should always
-    return an object with the updated address.</p>
-  <p>The elevator button is another good example of idempotent functionality:
-    &quot;The initial activation of the button moves the system into a requesting
-    state, until the request is satisfied. Subsequent activations of the button
-    between the initial activation and the request being satisfied have no
-    effect.&quot;</p>
-  <h3>Be Immutable</h3>
-  <p>Passed data shall never be modified or mutated. New data may be created,
-    but it can never be mutated. This is the nature of a Service Bus and must
-    be adhered to in order to ensure horizontal scaling.</p>
-  <h3>Share Nothing</h3>
-  <p>Any data that needs to be persisted must be stored in a stateful service
-    that can be utilized by other services.  At no point will caching be
-    utilized outside of a single execution of any given function.</p>
-  <h3>The Rule of Jim</h3>
-  <p>I once worked with a man named Jim. Jim was known for being a bit odd. If
-    you wanted to break something, you gave it to Jim. If you wanted to know
-    the limits of something, you gave it to Jim.</p>
-  <p>An example was the concepts of tasks and sub-tasks. These were introduced
-    as &quot;Create a task or sub-task for every action.&quot; Within 24 hours Jim had
-    crashed the system by creating a tree 20+ levels deep containing over 400
-    tasks and sub-task combinations. Rather than resolve the process or &quot;fix&quot;
-    the application Jim was told to stop.</p>
-  <p>In so much as is possible don&apos;t make the edge case stop. If it is correct
-    for someone to create such a tree then let it be created, let it be
-    navigated, and if it doesn&apos;t work then fix it.</p>
-  <h2>Data Query Language</h2>
-  <p>To aid with the intgration of most Data Stores a common query language
-    must exist and must be defined. To keep with the ability to store queries
-    as JSON a structure is borrowed from that of Sift and MongoDB. All
-    operations listed below must be implmented for a data store to be considered
-    acceptable. In some cases, such as the memory store or the LevelDB store,
-    sift may be directly utilized to traverse and filter the results before
-    returning them to the caller.</p>
-  <p>The following was taken from the Sift documentation and reduced to fit
-    the larger audience.</p>
-
-  <h3>$in</h3>
-  <p>array value must be $in the given query:</p>
-  <p>Intersecting two arrays:</p>
-  <pre><code>  //filtered: [&apos;Brazil&apos;]
-  filter({ $in: [&apos;Costa Rica&apos;,&apos;Brazil&apos;] }, [&apos;Brazil&apos;,&apos;Haiti&apos;,&apos;Peru&apos;,&apos;Chile&apos;]);</code></pre>
-  <p>Here&apos;s another example. This acts more like the $or operator:</p>
-  <pre><code>  filter({ location: { $in: [&apos;Costa Rica&apos;,&apos;Brazil&apos;] } }, { name: &apos;Craig&apos;, location: &apos;Brazil&apos; });</code></pre>
-
-  <h3>$nin</h3>
-  <p>Opposite of $in:</p>
-  <pre><code>  //filtered: [&apos;Haiti&apos;,&apos;Peru&apos;,&apos;Chile&apos;]
-  filter({ $nin: [&apos;Costa Rica&apos;,&apos;Brazil&apos;] }, [&apos;Brazil&apos;,&apos;Haiti&apos;,&apos;Peru&apos;,&apos;Chile&apos;]);</code></pre>
-
-  <h3>$exists</h3>
-  <p>Checks if whether a value exists:</p>
-  <pre><code>  //filtered: [&apos;Craig&apos;,&apos;Tim&apos;]
-  filter({ $exists: true }, [&apos;Craig&apos;,null,&apos;Tim&apos;]);</code></pre>
-  <p>You can also filter out values that don&apos;t exist</p>
-  <pre><code>  //filtered: [{ name: &apos;Craig&apos;, city: &apos;Minneapolis&apos; }]
-  filter({ city: { $exists: false } }, [ { name: &apos;Craig&apos;, city: &apos;Minneapolis&apos; }, { name: &apos;Tim&apos; }]);</code></pre>
-
-  <h3>$gte</h3>
-  <p>Checks if a number is &gt;= value:</p>
-  <pre><code>  //filtered: [2, 3]
-  filter({ $gte: 2 }, [0, 1, 2, 3]);</code></pre>
-
-  <h3>$gt</h3>
-  <p>Checks if a number is &gt; value:</p>
-  <pre><code>  //filtered: [3]
-  filter({ $gt: 2 }, [0, 1, 2, 3]);</code></pre>
-
-  <h3>$lte</h3>
-  <p>Checks if a number is <= value.<="" p="">
-  <pre><code>  //filtered: [0, 1, 2]
-  filter({ $lte: 2 }, [0, 1, 2, 3]);</code></pre>
-
-  <h3>$lt</h3>
-  <p>Checks if number is &lt; value.</p>
-  <pre><code>  //filtered: [0, 1]
-  filter({ $lt: 2 }, [0, 1, 2, 3]);</code></pre>
-
-  <h3>$eq</h3>
-  <p>Checks if query == value. Note that $eq can be omitted. For $eq, and $neq</p>
-  <pre><code>  //filtered: [{ state: &apos;MN&apos; }]
-  filter({ state: {$eq: &apos;MN&apos; }}, [{ state: &apos;MN&apos; }, { state: &apos;CA&apos; }, { state: &apos;WI&apos; });</code></pre>
-  <p>Or:</p>
-  <pre><code>  //filtered: [{ state: &apos;MN&apos; }]
-  filter({ state: &apos;MN&apos; }, [{ state: &apos;MN&apos; }, { state: &apos;CA&apos; }, { state: &apos;WI&apos; });</code></pre>
-
-  <h3>$ne</h3>
-  <p>Checks if query != value.</p>
-  <pre><code>  //filtered: [{ state: &apos;CA&apos; }, { state: &apos;WI&apos;}]
-  filter({ state: {$ne: &apos;MN&apos; }}, [{ state: &apos;MN&apos; }, { state: &apos;CA&apos; }, { state: &apos;WI&apos; });</code></pre>
-
-  <h3>$all</h3>
-  <p>values must match everything in array:</p>
-  <pre><code>  //filtered: [ { tags: [&apos;books&apos;,&apos;programming&apos;,&apos;travel&apos; ]} ]
-  filter({ tags: {$all: [&apos;books&apos;,&apos;programming&apos;] }}, [
-  { tags: [&apos;books&apos;,&apos;programming&apos;,&apos;travel&apos; ] },
-  { tags: [&apos;travel&apos;,&apos;cooking&apos;] } ]);</code></pre>
-
-  <h3>$and</h3>
-  <p>ability to use an array of expressions. All expressions must test true.</p>
-  <pre><code>  //filtered: [ { name: &apos;Craig&apos;, state: &apos;MN&apos; }]
-  filter({ $and: [ { name: &apos;Craig&apos; }, { state: &apos;MN&apos; } ] }, [
-  { name: &apos;Craig&apos;, state: &apos;MN&apos; },
-  { name: &apos;Tim&apos;, state: &apos;MN&apos; },
-  { name: &apos;Joe&apos;, state: &apos;CA&apos; } ]);</code></pre>
-
-  <h3>$or</h3>
-  <p>OR array of expressions.</p>
-  <pre><code>  //filtered: [ { name: &apos;Craig&apos;, state: &apos;MN&apos; }, { name: &apos;Tim&apos;, state: &apos;MN&apos; }]
-  filter({ $or: [ { name: &apos;Craig&apos; }, { state: &apos;MN&apos; } ] }, [
-  { name: &apos;Craig&apos;, state: &apos;MN&apos; },
-  { name: &apos;Tim&apos;, state: &apos;MN&apos; },
-  { name: &apos;Joe&apos;, state: &apos;CA&apos; } ]);</code></pre>
-
-  <h3>$nor</h3>
-  <p>opposite of or:</p>
-  <pre><code>  //filtered: [ { name: &apos;Tim&apos;, state: &apos;MN&apos; }, { name: &apos;Joe&apos;, state: &apos;CA&apos; }]
-  filter({ $nor: [ { name: &apos;Craig&apos; }, { state: &apos;MN&apos; } ] }, [
-  { name: &apos;Craig&apos;, state: &apos;MN&apos; },
-  { name: &apos;Tim&apos;, state: &apos;MN&apos; },
-  { name: &apos;Joe&apos;, state: &apos;CA&apos; } ]);</code></pre>
-
-  <h3>$regex</h3>
-  <p>Matches values based on the given regular expression</p>
-  <pre><code>  filter({ $regex: /^f/i, $nin: [&quot;frank&quot;] }, [&quot;frank&quot;, &quot;fred&quot;, &quot;sam&quot;, &quot;frost&quot;]); // [&quot;fred&quot;, &quot;frost&quot;]</code></pre>
-
-  <h3>$not</h3>
-  <p>Not expression:</p>
-  <pre><code>  filter({$not:{$in:[&apos;craig&apos;,&apos;tim&apos;]}}, [&apos;craig&apos;,&apos;tim&apos;,&apos;jake&apos;]); //[&apos;jake&apos;]
-  filter({$not:{$size:5}}, [&apos;craig&apos;,&apos;tim&apos;,&apos;jake&apos;]); //[&apos;tim&apos;,&apos;jake&apos;]</code></pre>
-</=></p></div>
+</div>
 </script>
     <script type="text/x-template" id="projects" data-api="/api/v1/projects" nav="projects"><div class="ink-grid vertical-space">
   <div class="column-group">
@@ -235,7 +60,7 @@
       {{#each items}}
         <div class="all-25 medium-50 small-100 tiny-100">
           <div class="column-group">
-            <div class="all-80"><h3><a href="#project/edit/{{_id}}">{{name}}</a></h3></div>
+            <div class="all-80"><h3><a href="#project/{{_id}}">{{name}}</a></h3></div>
             <div class="all-20"><span class="ink-badge grey">v{{version}}</span></div>
           </div>
           <p class="all-100">{{description}}</p>
@@ -249,7 +74,7 @@
 </script>
     <script type="text/x-template" id="newproject" nav="project/new"><div class="ink-grid vertical-space">
   <h1>New Project</h1>
-  <form class="ink-form" data-controller="FormSubmitter" action="/api/v1/project" data-target="#project/edit/{_id}">
+  <form class="ink-form" data-controller="FormSubmitter" action="/api/v1/project" data-target="#project/{_id}">
     <div class="control-group required">
       <label>Project Name:</label>
       <div class="control">
@@ -274,6 +99,7 @@
 </script>
     <script type="text/x-template" id="editproject" data-api="/api/v1/project/{id}" nav="project/edit/{id}"><div class="ink-grid vertical-space">
   <h1>View project</h1>
+  <a href="#project/{{_id}}">&lt; overview</a>
   <form class="ink-form" data-controller="FormSubmitter" action="/api/v1/project/{{_id}}" data-target="#project/edit/{_id}" data-message="Saved">
     <div class="control-group required">
       <label>Project Name:</label>
@@ -298,6 +124,60 @@
   </form>
 </div>
 </script>
+    <script type="text/x-template" id="viewproject" data-api="/api/v1/project/{id}/tree" nav="project/{id}"><h1>{{root.name}} <sup>v{{root.version}}</sup><sub><a href="#project/edit/{{root._id}}">details</a><sub></sub></sub></h1>
+<div data-controller="MindMap"></div>
+</script>
+    <script type="text/x-template" id="edititem" data-api="/api/v1/project/{project_id}/item/{item_id}" nav="project/{project_id}/item/{item_id}"><div class="ink-grid vertical-space">
+  <h1>Edit Item Details</h1>
+  <a href="#project/{{project_id}}">&lt; overview</a>
+  <form class="ink-form" data-controller="FormSubmitter" action="/api/v1/project/{{project_id}}/item/{{_id}}" data-target="#project/{project_id}" data-message="Saved">
+    <input type="hidden" name="parent_id" value="{{parent_id}}">
+    <div class="control-group required">
+      <label>Name:</label>
+      <div class="control">
+        <input name="name" placeholder="Item name..." value="{{name}}">
+      </div>
+    </div>
+    <div class="control-group">
+      <label>Description</label>
+      <div class="control">
+        <input name="description" placeholder="Description..." value="{{description}}">
+      </div>
+      <label>Type:</label>
+      <div class="control">
+        <input name="type" placeholder="Type..." value="{{type}}">
+      </div>
+      <label>Status:</label>
+      <div class="control">
+        <input name="status" placeholder="Status..." value="{{status}}">
+      </div>
+      <label>Target Version:</label>
+      <div class="control">
+        <input name="version" placeholder="0.0.1" value="{{version}}">
+      </div>
+    </div>
+    <div class="control-group">
+      <button class="ink-button blue">Update</button>
+      <button class="ink-button red" data-method="DELETE" data-confirm="Are you sure you want to delete this project?" data-target="#project/{project_id}">Delete</button>
+    </div>
+  </form>
+</div>
+</script>
+    <script type="text/x-template" id="reports" nav="reports" data-api="/api/v1/projects"><h1>Reports</h1>
+<form data-controller="ReportSelector">
+  Select a project:
+    <select name="id">
+    {{#each items}}
+      <option value="{{_id}}">{{name}}</option>
+    {{/each}}
+    </select>
+  Select a report:
+    <select name="report">
+      <option value="#reports/overview/{id}">Status Overview</option>
+    </select>
+  <button class="ink-button blue">Display</button>
+</form>
+</script>
     <script type="text/x-template" id="status" data-api="/api/v1/status" nav="status"><div class="ink-grid vertical-space">
   <div class="column-group">
     <div><strong>UI Version:</strong> v0.0.1</div>
@@ -311,12 +191,36 @@
 </div>
 </script>
 
+    <script type="text/x-template" id="reports_overview" nav="reports/overview/{id}" data-api="/api/v1/project/{id}/items"><h1>Status Overview</h1>
+{{log items}}
+<table data-controller="TableView" data-table-cols="[
+  {
+    title: &apos;Name&apos;,
+    value: &apos;name&apos;
+  },
+  {
+    title: &apos;Version&apos;,
+    value: &apos;version&apos;
+  },
+  {
+    title: &apos;Type&apos;,
+    value: &apos;type&apos;
+  },
+  {
+    title: &apos;Status&apos;,
+    value: &apos;status&apos;
+  },
+]"></table>
+</script>
+
     <script type="text/javascript" src="/vendor/handlebars/handlebars.js"></script>
     <script type="text/javascript" src="/vendor/satnav/dist/satnav.js"></script>
     <script type="text/javascript" src="/vendor/async/async.js"></script>
     <script type="text/javascript" src="/vendor/moment/moment.min.js"></script>
     <script type="text/javascript" src="/vendor/markdown/markdown.js"></script>
     <script type="text/javascript" src="/vendor/alertify/alertify.min.js"></script>
+    <script type="text/javascript" src="/vendor/d3/d3.min.js"></script>
+    <script type="text/javascript" src="/vendor/mousetrap/mousetrap.js"></script>
 
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
 

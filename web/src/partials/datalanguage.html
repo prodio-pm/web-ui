@@ -1,0 +1,106 @@
+<div class="ink-grid vertical-space">
+  <h2>Data Query Language</h2>
+  <p>To aid with the intgration of most Data Stores a common query language
+    must exist and must be defined. To keep with the ability to store queries
+    as JSON a structure is borrowed from that of Sift and MongoDB. All
+    operations listed below must be implmented for a data store to be considered
+    acceptable. In some cases, such as the memory store or the LevelDB store,
+    sift may be directly utilized to traverse and filter the results before
+    returning them to the caller.</p>
+  <p>The following was taken from the Sift documentation and reduced to fit
+    the larger audience.</p>
+
+  <h3>$in</h3>
+  <p>array value must be $in the given query:</p>
+  <p>Intersecting two arrays:</p>
+  <pre><code>  //filtered: ['Brazil']
+  filter({ $in: ['Costa Rica','Brazil'] }, ['Brazil','Haiti','Peru','Chile']);</code></pre>
+  <p>Here's another example. This acts more like the $or operator:</p>
+  <pre><code>  filter({ location: { $in: ['Costa Rica','Brazil'] } }, { name: 'Craig', location: 'Brazil' });</code></pre>
+
+  <h3>$nin</h3>
+  <p>Opposite of $in:</p>
+  <pre><code>  //filtered: ['Haiti','Peru','Chile']
+  filter({ $nin: ['Costa Rica','Brazil'] }, ['Brazil','Haiti','Peru','Chile']);</code></pre>
+
+  <h3>$exists</h3>
+  <p>Checks if whether a value exists:</p>
+  <pre><code>  //filtered: ['Craig','Tim']
+  filter({ $exists: true }, ['Craig',null,'Tim']);</code></pre>
+  <p>You can also filter out values that don't exist</p>
+  <pre><code>  //filtered: [{ name: 'Craig', city: 'Minneapolis' }]
+  filter({ city: { $exists: false } }, [ { name: 'Craig', city: 'Minneapolis' }, { name: 'Tim' }]);</code></pre>
+
+  <h3>$gte</h3>
+  <p>Checks if a number is >= value:</p>
+  <pre><code>  //filtered: [2, 3]
+  filter({ $gte: 2 }, [0, 1, 2, 3]);</code></pre>
+
+  <h3>$gt</h3>
+  <p>Checks if a number is > value:</p>
+  <pre><code>  //filtered: [3]
+  filter({ $gt: 2 }, [0, 1, 2, 3]);</code></pre>
+
+  <h3>$lte</h3>
+  <p>Checks if a number is <= value.</p>
+  <pre><code>  //filtered: [0, 1, 2]
+  filter({ $lte: 2 }, [0, 1, 2, 3]);</code></pre>
+
+  <h3>$lt</h3>
+  <p>Checks if number is < value.</p>
+  <pre><code>  //filtered: [0, 1]
+  filter({ $lt: 2 }, [0, 1, 2, 3]);</code></pre>
+
+  <h3>$eq</h3>
+  <p>Checks if query == value. Note that $eq can be omitted. For $eq, and $neq</p>
+  <pre><code>  //filtered: [{ state: 'MN' }]
+  filter({ state: {$eq: 'MN' }}, [{ state: 'MN' }, { state: 'CA' }, { state: 'WI' });</code></pre>
+  <p>Or:</p>
+  <pre><code>  //filtered: [{ state: 'MN' }]
+  filter({ state: 'MN' }, [{ state: 'MN' }, { state: 'CA' }, { state: 'WI' });</code></pre>
+
+  <h3>$ne</h3>
+  <p>Checks if query != value.</p>
+  <pre><code>  //filtered: [{ state: 'CA' }, { state: 'WI'}]
+  filter({ state: {$ne: 'MN' }}, [{ state: 'MN' }, { state: 'CA' }, { state: 'WI' });</code></pre>
+
+  <h3>$all</h3>
+  <p>values must match everything in array:</p>
+  <pre><code>  //filtered: [ { tags: ['books','programming','travel' ]} ]
+  filter({ tags: {$all: ['books','programming'] }}, [
+  { tags: ['books','programming','travel' ] },
+  { tags: ['travel','cooking'] } ]);</code></pre>
+
+  <h3>$and</h3>
+  <p>ability to use an array of expressions. All expressions must test true.</p>
+  <pre><code>  //filtered: [ { name: 'Craig', state: 'MN' }]
+  filter({ $and: [ { name: 'Craig' }, { state: 'MN' } ] }, [
+  { name: 'Craig', state: 'MN' },
+  { name: 'Tim', state: 'MN' },
+  { name: 'Joe', state: 'CA' } ]);</code></pre>
+
+  <h3>$or</h3>
+  <p>OR array of expressions.</p>
+  <pre><code>  //filtered: [ { name: 'Craig', state: 'MN' }, { name: 'Tim', state: 'MN' }]
+  filter({ $or: [ { name: 'Craig' }, { state: 'MN' } ] }, [
+  { name: 'Craig', state: 'MN' },
+  { name: 'Tim', state: 'MN' },
+  { name: 'Joe', state: 'CA' } ]);</code></pre>
+
+  <h3>$nor</h3>
+  <p>opposite of or:</p>
+  <pre><code>  //filtered: [ { name: 'Tim', state: 'MN' }, { name: 'Joe', state: 'CA' }]
+  filter({ $nor: [ { name: 'Craig' }, { state: 'MN' } ] }, [
+  { name: 'Craig', state: 'MN' },
+  { name: 'Tim', state: 'MN' },
+  { name: 'Joe', state: 'CA' } ]);</code></pre>
+
+  <h3>$regex</h3>
+  <p>Matches values based on the given regular expression</p>
+  <pre><code>  filter({ $regex: /^f/i, $nin: ["frank"] }, ["frank", "fred", "sam", "frost"]); // ["fred", "frost"]</code></pre>
+
+  <h3>$not</h3>
+  <p>Not expression:</p>
+  <pre><code>  filter({$not:{$in:['craig','tim']}}, ['craig','tim','jake']); //['jake']
+  filter({$not:{$size:5}}, ['craig','tim','jake']); //['tim','jake']</code></pre>
+</div>
