@@ -4,7 +4,8 @@
   "description": "Simplified project management",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test"
+    "test": "./node_modules/mocha/bin/mocha test",
+    "start": "node server.js"
   },
   "keywords": [
     "Project",
@@ -43,5 +44,19 @@
     "socket.io": "^1.0.4"
   },
   "author": "Jeremy Darling <jeremy.darling@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "bin": {
+    "prodio": "app.js"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/prodio-pm/web-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/prodio-pm/web-ui/issues"
+  },
+  "homepage": "https://github.com/prodio-pm/web-ui"
 }
