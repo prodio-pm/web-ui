@@ -46,7 +46,7 @@
   "author": "Jeremy Darling <jeremy.darling@gmail.com>",
   "license": "MIT",
   "bin": {
-    "prodio": "app.js"
+    "prodio-server": "server.js"
   },
   "directories": {
     "test": "test"
