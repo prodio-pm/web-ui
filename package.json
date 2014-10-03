@@ -58,5 +58,6 @@
   "bugs": {
     "url": "https://github.com/prodio-pm/web-ui/issues"
   },
+  "preferGlobal": true,
   "homepage": "https://github.com/prodio-pm/web-ui"
 }
