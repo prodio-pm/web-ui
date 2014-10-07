@@ -94,20 +94,18 @@ var getTree = function listRecords(req, reply){
       var tree = {
         root: record[record.root],
         nodes: records[records.root],
-        edges: [],
-        criteria: {
-          length: records.length,
-          offset: records.offset,
-          count: records.count,
-          limit: records.limit
-        }
+        edges: []
       };
       tree.nodes.forEach(function(node){
         tree.edges.push({from: node.parent_id, to: node._id});
       });
       return reply({
         root: 'tree',
-        tree: tree
+        tree: tree,
+        length: records.length,
+        offset: records.offset,
+        count: records.count,
+        limit: records.limit
       });
     });
   });
