@@ -109,7 +109,7 @@ Application.prototype.init = function(){
 
 module.exports = new Application();
 
-},{"../lib/controllers.js":"/home/jdarling/proj/web/src/lib/controllers.js","../lib/handlebarsHelpers.js":"/home/jdarling/proj/web/src/lib/handlebarsHelpers.js","../lib/loader.js":"/home/jdarling/proj/web/src/lib/loader.js","../lib/partials.js":"/home/jdarling/proj/web/src/lib/partials.js","../lib/support.js":"/home/jdarling/proj/web/src/lib/support.js"}],"./web/src/js/controllers/charts/barchartcontroller.js":[function(require,module,exports){
+},{"../lib/controllers.js":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../lib/handlebarsHelpers.js":"/home/jdarling/prodio/web/web/src/lib/handlebarsHelpers.js","../lib/loader.js":"/home/jdarling/prodio/web/web/src/lib/loader.js","../lib/partials.js":"/home/jdarling/prodio/web/web/src/lib/partials.js","../lib/support.js":"/home/jdarling/prodio/web/web/src/lib/support.js"}],"./web/src/js/controllers/charts/barchartcontroller.js":[function(require,module,exports){
 var Bar = require('../../charts/bar.js');
 var applyChartConfiguration = require('../../../lib/charts').applyChartConfiguration;
 var Support = require('../../../lib/support.js');
@@ -152,7 +152,7 @@ BarChartController.prototype.update = function(data){
 
 require('../../../lib/controllers.js').register('BarChart', BarChartController);
 
-},{"../../../lib/charts":"/home/jdarling/proj/web/src/lib/charts.js","../../../lib/controllers.js":"/home/jdarling/proj/web/src/lib/controllers.js","../../../lib/support.js":"/home/jdarling/proj/web/src/lib/support.js","../../charts/bar.js":"/home/jdarling/proj/web/src/js/charts/bar.js"}],"./web/src/js/controllers/charts/linechartcontroller.js":[function(require,module,exports){
+},{"../../../lib/charts":"/home/jdarling/prodio/web/web/src/lib/charts.js","../../../lib/controllers.js":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../../../lib/support.js":"/home/jdarling/prodio/web/web/src/lib/support.js","../../charts/bar.js":"/home/jdarling/prodio/web/web/src/js/charts/bar.js"}],"./web/src/js/controllers/charts/linechartcontroller.js":[function(require,module,exports){
 var Line = require('../../charts/line.js');
 var applyChartConfiguration = require('../../../lib/charts').applyChartConfiguration;
 
@@ -192,7 +192,7 @@ LineChartController.prototype.update = function(data){
 
 require('../../../lib/controllers').register('LineChart', LineChartController);
 
-},{"../../../lib/charts":"/home/jdarling/proj/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/proj/web/src/lib/controllers.js","../../charts/line.js":"/home/jdarling/proj/web/src/js/charts/line.js"}],"./web/src/js/controllers/charts/mindmapcontroller.js":[function(require,module,exports){
+},{"../../../lib/charts":"/home/jdarling/prodio/web/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../../charts/line.js":"/home/jdarling/prodio/web/web/src/js/charts/line.js"}],"./web/src/js/controllers/charts/mindmapcontroller.js":[function(require,module,exports){
 var MindMap = require('../../charts/mindmap.js');
 var applyChartConfiguration = require('../../../lib/charts').applyChartConfiguration;
 var Loader = require('../../../lib/loader');
@@ -783,7 +783,7 @@ MindMapController.prototype.teardown = function(container){
 
 require('../../../lib/controllers').register('MindMap', MindMapController);
 
-},{"../../../lib/charts":"/home/jdarling/proj/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/proj/web/src/lib/controllers.js","../../../lib/loader":"/home/jdarling/proj/web/src/lib/loader.js","../../../lib/support":"/home/jdarling/proj/web/src/lib/support.js","../../charts/mindmap.js":"/home/jdarling/proj/web/src/js/charts/mindmap.js"}],"./web/src/js/controllers/charts/piechartcontroller.js":[function(require,module,exports){
+},{"../../../lib/charts":"/home/jdarling/prodio/web/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../../../lib/loader":"/home/jdarling/prodio/web/web/src/lib/loader.js","../../../lib/support":"/home/jdarling/prodio/web/web/src/lib/support.js","../../charts/mindmap.js":"/home/jdarling/prodio/web/web/src/js/charts/mindmap.js"}],"./web/src/js/controllers/charts/piechartcontroller.js":[function(require,module,exports){
 var Pie = require('../../charts/pie.js');
 var applyChartConfiguration = require('../../../lib/charts').applyChartConfiguration;
 
@@ -823,7 +823,7 @@ PieChartController.prototype.update = function(data){
 
 require('../../../lib/controllers').register('PieChart', PieChartController);
 
-},{"../../../lib/charts":"/home/jdarling/proj/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/proj/web/src/lib/controllers.js","../../charts/pie.js":"/home/jdarling/proj/web/src/js/charts/pie.js"}],"./web/src/js/controllers/charts/scatterchartcontroller.js":[function(require,module,exports){
+},{"../../../lib/charts":"/home/jdarling/prodio/web/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../../charts/pie.js":"/home/jdarling/prodio/web/web/src/js/charts/pie.js"}],"./web/src/js/controllers/charts/scatterchartcontroller.js":[function(require,module,exports){
 var Scatter = require('../../charts/scatter.js');
 var applyChartConfiguration = require('../../../lib/charts').applyChartConfiguration;
 
@@ -877,7 +877,7 @@ ScatterChartController.prototype.update = function(data){
 
 require('../../../lib/controllers').register('ScatterChart', ScatterChartController);
 
-},{"../../../lib/charts":"/home/jdarling/proj/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/proj/web/src/lib/controllers.js","../../charts/scatter.js":"/home/jdarling/proj/web/src/js/charts/scatter.js"}],"./web/src/js/controllers/charts/tableviewcontroller.js":[function(require,module,exports){
+},{"../../../lib/charts":"/home/jdarling/prodio/web/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../../charts/scatter.js":"/home/jdarling/prodio/web/web/src/js/charts/scatter.js"}],"./web/src/js/controllers/charts/tableviewcontroller.js":[function(require,module,exports){
 var Table = require('../../charts/table.js');
 var applyChartConfiguration = require('../../../lib/charts').applyChartConfiguration;
 
@@ -933,7 +933,7 @@ TableViewController.prototype.update = function(data){
 
 require('../../../lib/controllers').register('TableView', TableViewController);
 
-},{"../../../lib/charts":"/home/jdarling/proj/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/proj/web/src/lib/controllers.js","../../charts/table.js":"/home/jdarling/proj/web/src/js/charts/table.js"}],"./web/src/js/controllers/formsubmitter.js":[function(require,module,exports){
+},{"../../../lib/charts":"/home/jdarling/prodio/web/web/src/lib/charts.js","../../../lib/controllers":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../../charts/table.js":"/home/jdarling/prodio/web/web/src/js/charts/table.js"}],"./web/src/js/controllers/formsubmitter.js":[function(require,module,exports){
 var controllers = require('../../lib/controllers.js');
 var support = require('../../lib/support');
 var Loader = require('../../lib/loader');
@@ -1012,7 +1012,7 @@ FormSubmitterController.prototype.teardown = function(container){
 
 controllers.register('FormSubmitter', FormSubmitterController);
 
-},{"../../lib/controllers.js":"/home/jdarling/proj/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/proj/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/proj/web/src/lib/loader.js","../../lib/socket":"/home/jdarling/proj/web/src/lib/socket.js","../../lib/support":"/home/jdarling/proj/web/src/lib/support.js"}],"./web/src/js/controllers/reportselector.js":[function(require,module,exports){
+},{"../../lib/controllers.js":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/prodio/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/prodio/web/web/src/lib/loader.js","../../lib/socket":"/home/jdarling/prodio/web/web/src/lib/socket.js","../../lib/support":"/home/jdarling/prodio/web/web/src/lib/support.js"}],"./web/src/js/controllers/reportselector.js":[function(require,module,exports){
 var controllers = require('../../lib/controllers.js');
 var support = require('../../lib/support');
 var Loader = require('../../lib/loader');
@@ -1056,7 +1056,7 @@ ReportSelectorController.prototype.teardown = function(container){
 
 controllers.register('ReportSelector', ReportSelectorController);
 
-},{"../../lib/controllers.js":"/home/jdarling/proj/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/proj/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/proj/web/src/lib/loader.js","../../lib/socket":"/home/jdarling/proj/web/src/lib/socket.js","../../lib/support":"/home/jdarling/proj/web/src/lib/support.js"}],"./web/src/js/controllers/socketlistener.js":[function(require,module,exports){
+},{"../../lib/controllers.js":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/prodio/web/web/src/lib/handlebarsHelpers.js","../../lib/loader":"/home/jdarling/prodio/web/web/src/lib/loader.js","../../lib/socket":"/home/jdarling/prodio/web/web/src/lib/socket.js","../../lib/support":"/home/jdarling/prodio/web/web/src/lib/support.js"}],"./web/src/js/controllers/socketlistener.js":[function(require,module,exports){
 var controllers = require('../../lib/controllers.js');
 var support = require('../../lib/support');
 var el = support.el;
@@ -1086,7 +1086,7 @@ SocketListenerController.prototype.teardown = function(){
 
 controllers.register('SocketListener', SocketListenerController);
 
-},{"../../lib/controllers.js":"/home/jdarling/proj/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/proj/web/src/lib/handlebarsHelpers.js","../../lib/socket":"/home/jdarling/proj/web/src/lib/socket.js","../../lib/support":"/home/jdarling/proj/web/src/lib/support.js"}],"/home/jdarling/proj/web/src/js/charts/bar.js":[function(require,module,exports){
+},{"../../lib/controllers.js":"/home/jdarling/prodio/web/web/src/lib/controllers.js","../../lib/handlebarsHelpers":"/home/jdarling/prodio/web/web/src/lib/handlebarsHelpers.js","../../lib/socket":"/home/jdarling/prodio/web/web/src/lib/socket.js","../../lib/support":"/home/jdarling/prodio/web/web/src/lib/support.js"}],"/home/jdarling/prodio/web/web/src/js/charts/bar.js":[function(require,module,exports){
 module.exports = function Bar() {
   var
       margin = {top: 30, right: 10, bottom: 50, left: 50},
@@ -1311,7 +1311,7 @@ module.exports = function Bar() {
   return chart;
 };
 
-},{}],"/home/jdarling/proj/web/src/js/charts/line.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/js/charts/line.js":[function(require,module,exports){
 module.exports = function Line() {
   var
     margin = {top: 30, right: 10, bottom: 50, left: 50},
@@ -1540,7 +1540,7 @@ module.exports = function Line() {
   return chart;
 };
 
-},{}],"/home/jdarling/proj/web/src/js/charts/mindmap.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/js/charts/mindmap.js":[function(require,module,exports){
 /*
   Sample Usage:
 
@@ -1958,7 +1958,7 @@ MindMap.loadFreeMind = function(fileName, callback){
   });
 };
 
-},{}],"/home/jdarling/proj/web/src/js/charts/pie.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/js/charts/pie.js":[function(require,module,exports){
 var Pie = module.exports = function(){
   var
       margin = {top: 20, left: 50, bottom: 20, right: 20},
@@ -2166,7 +2166,7 @@ var Pie = module.exports = function(){
   return chart;
 };
 
-},{}],"/home/jdarling/proj/web/src/js/charts/scatter.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/js/charts/scatter.js":[function(require,module,exports){
 var Scatter = module.exports = function(){
   var
       margin = {top: 20, left: 50, bottom: 20, right: 20},
@@ -2484,7 +2484,7 @@ var Scatter = module.exports = function(){
 return chart;
 };
 
-},{}],"/home/jdarling/proj/web/src/js/charts/table.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/js/charts/table.js":[function(require,module,exports){
 var Table = module.exports = function(){
   var
       width = -1,
@@ -2671,7 +2671,7 @@ var Table = module.exports = function(){
   return chart;
 };
 
-},{}],"/home/jdarling/proj/web/src/lib/charts.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/lib/charts.js":[function(require,module,exports){
 var Module = {};
 
 var lambda = (function(){
@@ -2822,7 +2822,7 @@ Module.getChartProperty = function(container, propertyName){
 
 module.exports = Module;
 
-},{}],"/home/jdarling/proj/web/src/lib/controllers.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/lib/controllers.js":[function(require,module,exports){
 var ControllerNotFoundException = function(controllerName){
   var self = this;
   self.name = 'ControllerNotFoundException';
@@ -2888,7 +2888,7 @@ if(typeof(MutationObserver)!=='undefined'){
 var controllers = new Controllers();
 module.exports = controllers;
 
-},{}],"/home/jdarling/proj/web/src/lib/handlebarsHelpers.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/lib/handlebarsHelpers.js":[function(require,module,exports){
 var containerIdx = 0;
 
 var helpers = {
@@ -3019,7 +3019,7 @@ for(key in Handlebars.helpers){
 
 module.exports = helpers;
 
-},{}],"/home/jdarling/proj/web/src/lib/loader.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/lib/loader.js":[function(require,module,exports){
 /*****************************************************************************\
   options
     uri: {}      - key value paris of data to send in url/get/uri
@@ -3253,7 +3253,7 @@ define([], function(){
   return Loader;
 });
 
-},{}],"/home/jdarling/proj/web/src/lib/partials.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/lib/partials.js":[function(require,module,exports){
 var Loader = require('../lib/loader.js');
 var Support = require('../lib/support.js');
 var el = Support.el;
@@ -3330,10 +3330,10 @@ Partials.prototype.preload = function(callback){
 };
 
 module.exports = Partials;
-},{"../lib/loader.js":"/home/jdarling/proj/web/src/lib/loader.js","../lib/support.js":"/home/jdarling/proj/web/src/lib/support.js"}],"/home/jdarling/proj/web/src/lib/socket.js":[function(require,module,exports){
+},{"../lib/loader.js":"/home/jdarling/prodio/web/web/src/lib/loader.js","../lib/support.js":"/home/jdarling/prodio/web/web/src/lib/support.js"}],"/home/jdarling/prodio/web/web/src/lib/socket.js":[function(require,module,exports){
 module.exports = io();
 
-},{}],"/home/jdarling/proj/web/src/lib/support.js":[function(require,module,exports){
+},{}],"/home/jdarling/prodio/web/web/src/lib/support.js":[function(require,module,exports){
 module.exports = {
   el: function(src, sel){
     if(!sel){

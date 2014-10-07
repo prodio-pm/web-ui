@@ -47,6 +47,20 @@ var listRecords = function listRecords(req, reply){
   var options = req.query||{};
   options.filter = options.filter || {};
   options.filter.project_id = req.params.project_id;
+  if(req.query.q){
+    var re = new RegExp(req.query.q, 'i');
+    options.filter.$or = [
+      {
+        name: re
+      },
+      {
+        description: re
+      },
+      {
+        version: re
+      }
+    ];
+  }
   self.asArray(options, function(err, records){
     if(err){
       return reply({

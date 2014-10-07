@@ -1,6 +1,10 @@
 Prodio
 ======
 
+Prodio in Latin means to "Come forth, appear, proceed and/or project".  It
+seemed like the prefect name for a project that hopes to help to move project
+management from a taboo topic into an enjoyable experience.
+
 Web UI
 ======
 

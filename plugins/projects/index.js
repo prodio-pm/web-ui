@@ -28,6 +28,17 @@ var listRecords = function listRecords(req, reply){
   var self = this;
   req.query.filter = req.query.filter || {};
   req.query.filter.type='project';
+  if(req.query.q){
+    var re = new RegExp(req.query.q, 'i');
+    req.query.filter.$or = [
+      {
+        name: re
+      },
+      {
+        description: re
+      }
+    ];
+  }
   self.asArray(req.query, function(err, records){
     if(err){
       return reply({
