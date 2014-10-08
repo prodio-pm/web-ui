@@ -28,7 +28,7 @@ var TYPES = {
   Default: function(defaultValue, next){
     return function(obj, callback){
       var type = typeof(obj);
-      if(obj === null || type === 'undefined'){
+      if(obj === null || type === 'undefined' || obj === ''){
         return callback(null, defaultValue);
       }
       if(next){
@@ -51,17 +51,49 @@ var TYPES = {
       });
     };
   },
-  String: function(){
+  String: function(minLength){
+    var checkLength = (function(minLength){
+      if(typeof(minLength)!=='undefined'&&isNumeric(minLength)){
+        return function(s){
+          return s.length>=minLength;
+        }
+      }
+      return function(){
+        return true;
+      };
+    })(minLength);
     return function(obj, callback){
       process.nextTick(function(){
         var type = typeof(obj);
         if(type==='string'){
+          if(!checkLength(obj)){
+            return callback('Must be at least '+minLength+' '+(minLength===1?'character':'characters')+' long');
+          }
           return callback(null, obj);
         }
         if(type==='number'||type==='boolean'){
           return callback(null, ''+obj);
         }
         return callback(expected('String', obj));
+      });
+    };
+  },
+  RegExp: function(reSource, options){
+    var re = reSource instanceof RegExp?reSource:new RegExp(reSource, options);
+    return function(obj, callback){
+      process.nextTick(function(){
+        var type = typeof(obj);
+        if(type==='number'||type==='boolean'){
+          obj = ''+obj;
+          type = 'string';
+        }
+        if(type!=='string'){
+          return callback(expected('String', obj));
+        }
+        if(!re.exec(obj)){
+          return callback('Must match '+reSource);
+        }
+        return callback(null, obj);
       });
     };
   },

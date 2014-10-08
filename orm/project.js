@@ -1,9 +1,9 @@
 var ORM = require('./orm');
 
 var Project = new ORM('project', {
-  name: ORM.String(),
-  description: ORM.String(),
-  version: ORM.Semver(),
+  name: ORM.String(1),
+  description: ORM.Optional(ORM.String()),
+  version: ORM.Default('0.0.1', ORM.Semver()),
 });
 
 module.exports = Project;

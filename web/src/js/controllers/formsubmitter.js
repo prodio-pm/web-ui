@@ -23,6 +23,12 @@ var FormSubmitterController = function(container, data){
           button.disabled = false;
         });
         if(err){
+          if(err.errors instanceof Array){
+            return err.errors.forEach(function(error){
+              var prefix = error.key?error.key+': ':'';
+              alertify.error(prefix+(error.error||error.stack||error));
+            });
+          }
           return alertify.error(err.error||err.stack||err);
         }
         if(message && alertify){
@@ -38,6 +44,12 @@ var FormSubmitterController = function(container, data){
         button.disabled = false;
       });
       if(err){
+        if(err.errors instanceof Array){
+          return err.errors.forEach(function(error){
+            var prefix = error.key?error.key+': ':'';
+            alertify.error(prefix+(error.error||error.stack||error));
+          });
+        }
         return alertify.error(err.error||err.stack||err);
       }
       window.location.href=target.replace(/{(.+)}/, function(match, token){

@@ -1,4 +1,5 @@
 var semver = require('semver');
+var Project = require('../../orm/project');
 
 var validatePayload = function validatePayload(payload, callback){
   if((!payload)||(typeof(payload)!=='object')){
@@ -7,6 +8,14 @@ var validatePayload = function validatePayload(payload, callback){
       error: 'Must supply a payload!'
     });
   }
+  Project.validate(payload, function(err, project){
+    if(err){
+      return callback(err);
+    }
+    project.type='project';
+    return callback(null, project);
+  });
+  return;
   if(!payload.name){
     return callback({
       root: 'error',
