@@ -1,5 +1,17 @@
+ORM Overview
+============
+
+The ORM for Prodio is not your standard implementation, it allows for member
+upgrades and downgrades.  To account for this you should check for a member
+on the root and then in the meta segment if it is not found there.
+
+You can post all of your data on the root of your ojbect and the backend will
+automatically migrate data that isn't within the ORM root to the meta segment.
+
+Anything posted to the meta segment will NOT be automatically moved to the root.
+
 Log
-===
+---
 
 ```
 Log{
@@ -7,14 +19,14 @@ Log{
   action: 'insert'||'upadte'||'delete'
   actor: '' // typically username, but could be system or another value
   user_id: Null||ID()
-  project_id: Null||ID()
+  actor_id: Null||ID() // ID of the object being acted upon
   class: 'project'||'item'||'edge'...
   object: {}
 }
 ```
 
 Project
-=======
+-------
 
 ```
 Project{
@@ -30,7 +42,7 @@ Project{
 ```
 
 Item
-====
+----
 
 ```
 Item{
@@ -50,7 +62,7 @@ Item{
 ```
 
 Edge
-====
+----
 
 ```
 Edge{
@@ -66,7 +78,7 @@ Edge{
 ```
 
 User
-====
+----
 
 ```
 User{
