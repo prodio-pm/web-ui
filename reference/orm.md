@@ -10,6 +10,10 @@ automatically migrate data that isn't within the ORM root to the meta segment.
 
 Anything posted to the meta segment will NOT be automatically moved to the root.
 
+The ORM does NOT necessarily match up with the API's.  This is on purpose since
+at times there may be necessity to augment the response object(s).  A good
+example of this is the project/{id}/tree endpoint.
+
 Log
 ---
 
