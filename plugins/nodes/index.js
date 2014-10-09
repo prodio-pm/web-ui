@@ -1,4 +1,4 @@
-var Item = require('../../orm/item');
+var Item = require('../../orm/node');
 
 var validatePayload = function validatePayload(store, project_id, payload, callback){
   if((!payload)||(typeof(payload)!=='object')){

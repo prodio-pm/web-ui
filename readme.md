@@ -27,11 +27,20 @@ API
 /api/v1/project/{id}/branch/{id}
 --------------------------------
 
-/api/v1/project/{id}/item/{id}
+/api/v1/project/{id}/nodes
+--------------------------
+
+/api/v1/project/{id}/node/{id}
 ------------------------------
 
 /api/v1/project/{id}/find?q={expression}&u={under}
 --------------------------------------------------
+
+/api/v1/project/{id}/edges
+--------------------------
+
+/api/v1/project/{id}/edge/{id}
+------------------------------
 
 /api/v1/users
 -------------
