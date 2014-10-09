@@ -1,4 +1,4 @@
-var ORM = require('./orm');
+var ORM = require('prodio-orm');
 
 var Log = new ORM('log', {
   action: ORM.String(),

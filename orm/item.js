@@ -1,4 +1,4 @@
-var ORM = require('./orm');
+var ORM = require('prodio-orm');
 
 var Item = new ORM('item', {
   project_id: ORM.ID(),

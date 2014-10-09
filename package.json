@@ -38,6 +38,7 @@
     "hapi-auth-cookie": "^1.0.2",
     "joi": "^4.6.2",
     "longjohn": "^0.2.4",
+    "prodio-orm": "0.0.2",
     "request": "^2.34.0",
     "semver": "^2.2.1",
     "sift": "0.0.16",

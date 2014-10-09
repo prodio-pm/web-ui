@@ -1,4 +1,4 @@
-var ORM = require('./orm');
+var ORM = require('prodio-orm');
 
 var Project = new ORM('project', {
   name: ORM.String(1),

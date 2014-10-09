@@ -1,4 +1,4 @@
-var ORM = require('./orm');
+var ORM = require('prodio-orm');
 
 var Edge = new ORM('edge', {
   project_id: ORM.ID(),
