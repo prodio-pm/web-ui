@@ -734,15 +734,15 @@ MindMapController.prototype.update = function(data, focus){
       };
     });
     data.edges.forEach(function(edge){
-      if(nodes[edge.from] && nodes[edge.to]){
-        return nodes[edge.from].children.push(nodes[edge.to]);
+      if(nodes[edge.source_id] && nodes[edge.destination_id]){
+        return nodes[edge.source_id].children.push(nodes[edge.destination_id]);
       }
-      if(!nodes[edge.from]){
-        var msg = 'Invalid: '+edge.to+' refrences '+edge.from+' that doesn\'t exist!';
+      if(!nodes[edge.source_id]){
+        var msg = 'Invalid: '+edge.source_id+' refrences '+edge.destination_id+' that doesn\'t exist!';
         console.log(msg);
         return alertify.error(msg);
       }
-      var msg = 'Invalid: '+edge.from+' refrences '+edge.to+' that doesn\'t exist!';
+      var msg = 'Invalid: '+edge.destination_id+' refrences '+edge.source_id+' that doesn\'t exist!';
       console.log(msg);
       return alertify.error(msg);
     });

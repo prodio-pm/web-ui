@@ -1,3 +1,4 @@
+var async = require('async');
 var Item = require('../../orm/node');
 var Edge = require('../../orm/edge');
 
@@ -25,16 +26,26 @@ var getTree = function listRecords(req, reply){
         nodes: records[records.root],
         edges: []
       };
-      tree.nodes.forEach(function(node){
-        tree.edges.push({from: node.parent_id, to: node._id});
-      });
-      return reply({
-        root: 'tree',
-        tree: tree,
-        length: records.length,
-        offset: records.offset,
-        count: records.count,
-        limit: records.limit
+      async.eachLimit(tree.nodes, 10, function(node, next){
+        var edge = {
+          project_id: node.project_id,
+          source_id: node.parent_id||node.project_id,
+          destination_id: node._id,
+          type: 'parent'
+        };
+        Edge.validate(edge, function(err, edge){
+          tree.edges.push(edge);
+          next();
+        });
+      }, function(){
+        return reply({
+          root: 'tree',
+          tree: tree,
+          length: records.length,
+          offset: records.offset,
+          count: records.count,
+          limit: records.limit
+        });
       });
     });
   });
@@ -71,12 +82,22 @@ var getBranch = function(req, reply){
           limit: records.limit
         }
       };
-      tree.nodes.forEach(function(node){
-        tree.edges.push({from: node.parent_id, to: node._id});
-      });
-      return reply({
-        root: 'tree',
-        tree: tree
+      async.eachLimit(tree.nodes, 10, function(node, next){
+        var edge = {
+          project_id: node.project_id,
+          source_id: node.parent_id||node.project_id,
+          destination_id: node._id,
+          type: 'parent'
+        };
+        Edge.validate(edge, function(err, edge){
+          tree.edges.push(edge);
+          next();
+        });
+      }, function(){
+        return reply({
+          root: 'tree',
+          tree: tree
+        });
       });
     });
   });
