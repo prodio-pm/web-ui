@@ -1,3 +1,5 @@
+var Item = require('../../orm/item');
+
 var validatePayload = function validatePayload(store, project_id, payload, callback){
   if((!payload)||(typeof(payload)!=='object')){
     return callback({
@@ -5,20 +7,7 @@ var validatePayload = function validatePayload(store, project_id, payload, callb
       error: 'Must supply a payload!'
     });
   }
-  if(!payload.name){
-    return callback({
-      root: 'error',
-      error: 'Must supply a name!'
-    });
-  }
-  if(!payload.type){
-    return callback({
-      root: 'error',
-      error: 'Must supply a type!'
-    });
-  }
   payload.project_id = project_id;
-  payload.parent_id = payload.parent_id || payload.project_id;
   store.get(project_id, function(err, project){
     if(err){
       return callback({
@@ -38,7 +27,12 @@ var validatePayload = function validatePayload(store, project_id, payload, callb
         error: 'Could not locate a project with id of '+project_id+'!'
       });
     }
-    callback(null, {project: project[project.root], payload: payload});
+    Item.validate(payload, function(err, item){
+      if(err){
+        return callback(err);
+      }
+      return callback(null, item);
+    });
   });
 };
 
@@ -175,7 +169,7 @@ var createRecord = function createRecord(req, reply){
     if(err){
       return reply(err);
     }
-    self.insert(details.payload, function(err, record){
+    self.insert(details, function(err, record){
       if(err){
         return reply({
           root: 'error',
@@ -196,7 +190,7 @@ var updateRecord = function updateRecord(req, reply){
     if(err){
       return reply(err);
     }
-    self.update(req.params.id, details.payload, function(err, record){
+    self.update(req.params.id, details, function(err, record){
       if(err){
         return reply({
           root: 'error',

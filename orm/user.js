@@ -20,17 +20,18 @@ var User = new ORM('user', {
     })
   }),
   projects: ORM.Default([], ORM.Array(
-      ORM.Object({
-        project_id: ORM.ID(),
-        rights: ORM.Optional({
-          read: ORM.Boolean(),
-          write: ORM.Boolean(),
-          create: ORM.Boolean(),
-          delete: ORM.Boolean(),
-          admin: ORM.Boolean()
-        })
+    ORM.Object({
+      project_id: ORM.ID(),
+      rights: ORM.Optional({
+        read: ORM.Boolean(),
+        write: ORM.Boolean(),
+        create: ORM.Boolean(),
+        delete: ORM.Boolean(),
+        admin: ORM.Boolean()
       })
-    ))
+    })
+  )),
+  _type: ORM.Value('user'),
 });
 
 module.exports = User;

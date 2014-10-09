@@ -15,22 +15,6 @@ var validatePayload = function validatePayload(payload, callback){
     project.type='project';
     return callback(null, project);
   });
-  return;
-  if(!payload.name){
-    return callback({
-      root: 'error',
-      error: 'Must supply a name!'
-    });
-  }
-  payload.version = payload.version || '0.0.1';
-  if(!semver.valid(payload.version)){
-    return callback({
-      root: 'error',
-      error: 'Invalid version specified "'+payload.version+'", must be a valid semver!'
-    });
-  }
-  payload.type = 'project';
-  callback(null, payload);
 };
 
 var listRecords = function listRecords(req, reply){
