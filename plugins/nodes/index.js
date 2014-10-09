@@ -229,37 +229,37 @@ module.exports = function(options, next){
   server.route([
     {
       method: 'GET',
-      path: config.route + 'project/{project_id}/items',
+      path: config.route + 'project/{project_id}/nodes',
       handler: listRecords.bind(store)
     },
     {
       method: 'GET',
-      path: config.route + 'project/{project_id}/item/{id}',
+      path: config.route + 'project/{project_id}/node/{id}',
       handler: getRecord.bind(store)
     },
     {
       method: 'POST',
-      path: config.route + 'project/{project_id}/item',
+      path: config.route + 'project/{project_id}/node',
       handler: createRecord.bind(store)
     },
     {
       method: 'PUT',
-      path: config.route + 'project/{project_id}/item',
+      path: config.route + 'project/{project_id}/node',
       handler: createRecord.bind(store)
     },
     {
       method: 'POST',
-      path: config.route + 'project/{project_id}/item/{id}',
+      path: config.route + 'project/{project_id}/node/{id}',
       handler: updateRecord.bind(store)
     },
     {
       method: 'PUT',
-      path: config.route + 'project/{project_id}/item/{id}',
+      path: config.route + 'project/{project_id}/node/{id}',
       handler: updateRecord.bind(store)
     },
     {
       method: 'DELETE',
-      path: config.route + 'project/{project_id}/item/{id}',
+      path: config.route + 'project/{project_id}/node/{id}',
       handler: deleteRecord.bind(store)
     },
     {
