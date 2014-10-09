@@ -378,7 +378,7 @@ MindMapController.prototype.bindEvents = function(container){
             cl = data.children = [];
           }
 
-          return Loader.post('/api/v1/project/'+self.project_id+'/item',
+          return Loader.post('/api/v1/project/'+self.project_id+'/node',
             {
               data: {
                 parent_id: data._id,
@@ -430,7 +430,7 @@ MindMapController.prototype.bindEvents = function(container){
           self.unbindEvents();
           alertify.confirm('Sure you want to delete '+data.name+'?', function(remove){
             if(remove){
-              return Loader.delete('/api/v1/project/'+self.project_id+'/item/'+data._id, function(err, deleted){
+              return Loader.delete('/api/v1/project/'+self.project_id+'/node/'+data._id, function(err, deleted){
                 self.bindEvents();
                 if(err){
                   return alertify.error(err.error||err);
@@ -460,7 +460,7 @@ MindMapController.prototype.bindEvents = function(container){
         if(name !== data.name){
           var rec = data.rec;
           var uri = data.parent?
-                '/api/v1/project/'+self.project_id+'/item/'+data._id:
+                '/api/v1/project/'+self.project_id+'/node/'+data._id:
                 '/api/v1/project/'+self.project_id;
           rec.name = name;
           return Loader.post(uri,
@@ -487,7 +487,7 @@ MindMapController.prototype.bindEvents = function(container){
     if(selection){
       var data = selection.__data__;
       if(data.parent){
-        return window.location.href = '#project/'+self.project_id+'/item/'+data._id;
+        return window.location.href = '#project/'+self.project_id+'/node/'+data._id;
       }
       return window.location.href = '#project/edit/'+self.project_id;
     }
@@ -625,7 +625,7 @@ MindMapController.prototype.bindEvents = function(container){
       d3.select('.templink').remove();
       if(draggingNode !== null){
         var uri = draggingNode.parent?
-              '/api/v1/project/'+self.project_id+'/item/'+draggingNode._id:
+              '/api/v1/project/'+self.project_id+'/node/'+draggingNode._id:
               '/api/v1/project/'+self.project_id;
         if(selectedNode){
           draggingNode.rec.parent_id = selectedNode.rec._id;
