@@ -85,7 +85,7 @@ var bunyan = function bunyan(server, options, next){
   setDefault(options, 'includeData', true);
   setDefault(options, 'mergeData', false);
   setDefault(options, 'skipUndefined', false);
-  //setDefault(options, 'joinTags', ', ');
+  setDefault(options, 'joinTags', false);
   setDefault(options, 'includePayload', true);
   setDefault(options, 'includeResponse', true);
   setDefault(options, 'includeHeaders', true);
