@@ -1,4 +1,13 @@
-var logger = require('../../lib/logger');
+try{
+  var logger = require('../../lib/logger');
+}catch(e){
+  try{
+    var bunyan = require('bunyan');
+    var logger = bunyan.createLogger({name: 'bunyan-logger'});
+  }catch(e){
+    throw new Error('Bunyan logger requires bunyan.  Use "npm install bunyan" to resolve');
+  }
+}
 var utils = require('../../lib/utils');
 var noop = function(){};
 
