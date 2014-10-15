@@ -20,6 +20,10 @@ var logEvent = function logEvent(ctx, data, request){
 
   if(ctx.includeResponse && request.response){
     var res = {}, include = false;
+    if(request.response.statusCode){
+      res.statusCode = request.response.statusCode;
+      include = true;
+    }
     if(request.response.headers){
       res.headers = request.response.headers;
       include = true;
