@@ -29,10 +29,10 @@ var logEvent = function logEvent(ctx, data, request){
         res.payload = typeof(request.response.source)==='object'?
           JSON.parse(JSON.stringify(request.response.source)):
           request.response.source;
+          include = true;
       }catch(e){
-        res.payload = request.response.source;
+        //res.payload = request.response.source;
       }
-      include = true;
     }
     if(include){
       obj.response = res;
@@ -81,7 +81,7 @@ var bunyan = function bunyan(server, options, next){
   setDefault(options, 'includeData', true);
   setDefault(options, 'mergeData', false);
   setDefault(options, 'skipUndefined', false);
-  setDefault(options, 'joinTags', ', ');
+  //setDefault(options, 'joinTags', ', ');
   setDefault(options, 'includePayload', true);
   setDefault(options, 'includeResponse', true);
   setDefault(options, 'includeHeaders', true);
